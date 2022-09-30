@@ -188,4 +188,18 @@
             $this->load->view('admin/include/header');
             $this->load->view('admin/all_posts',$data);
         }
+
+        public function delete_post($id){
+            $where = $this->db->where('post_id', $id);
+            $get = $where->get('posts')->row_array();
+            if($get['post_thumbnail'] != ''){
+                unlink(str_replace(base_url(), "",$get['post_thumbnail']));
+            }
+            $delete_query = $this->db->where('post_id', $id)->delete('posts');
+
+            if($delete_query == true){
+                $this->session->set_flashdata('delete_post','Your post has been deleted');
+                return redirect('Admin_controller/show_all_post');
+            }
+        }
     }

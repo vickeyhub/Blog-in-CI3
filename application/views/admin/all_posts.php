@@ -13,7 +13,8 @@
 						<div class="col-md-12 grid-margin">
 							<div class="row">
 								<div class="col-12 col-xl-8 mb-4 mb-xl-0">
-									<h3 class="font-weight-bold">All Post Categories</h3>
+									<h3 class="font-weight-bold">All Posts</h3>
+									<hr>
 								</div>
 								
 							</div>
@@ -21,6 +22,14 @@
 					</div>
 					
 					<div class="row">
+						
+							<?php
+								if($this->session->flashdata('delete_post')){
+									echo '<div class="col-md-12 p-3 stretch-card alert alert-danger" role="alert">'.
+									$this->session->flashdata('delete_post')
+									.'</div>';
+								} 
+							?>
 						<div class="col-md-12 stretch-card grid-margin">
 							<div class="card">
 								<div class="card-body">
@@ -41,9 +50,9 @@
                                                 <td><?= $row->post_title; ?></td>
                                                 <td><?= $row->post_category_title; ?></td>
                                                 <td><img src="<?= $row->post_thumbnail; ?>" alt="" height="100px"></td>
-                                                <td><?= $row->post_created_at; ?></td>
+                                                <td><b><?= date("d M, Y H:i A", strtotime($row->post_created_at)); ?></b></td>
                                                 <td></td>
-                                                <td></td>
+                                                <td><a href="<?= base_url("Admin_controller/delete_post/".$row->post_id); ?>" class="btn btn-danger">Delete</a></td>
                                             </tr>
 											<?php endforeach; ?>
                                     	</table>
